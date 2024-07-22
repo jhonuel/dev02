@@ -7,7 +7,7 @@ while true; do
 
   # Verificar si hay contenedores en estado Exited
   if [ -z "$exited_containers" ]; then
-    echo "No hay contenedores en estado Exited. $(date)"
+    echo "No hay 3 contenedores en estado Exited. $(date)"
   else
     # Iniciar los contenedores en estado Exited
     echo "Iniciando contenedores en estado Exited... $(date)"
