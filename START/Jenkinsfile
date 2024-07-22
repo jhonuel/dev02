@@ -38,7 +38,7 @@ pipeline {
                 // Detener y eliminar contenedores existentes
                 sh 'docker-compose down -v'
                 // Construir y levantar los nuevos contenedores
-                sh 'build .' 
+              //  sh 'build .' 
                 sh 'docker-compose up -d --build'
             }
         }
