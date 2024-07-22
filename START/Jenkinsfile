@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GITHUB_REPO = "https://github.com/jhonuel/dev02.git"
-        GIT_BRANCH = "main"
+        GIT_BRANCH = "dev02"
     }
 
     stages {
