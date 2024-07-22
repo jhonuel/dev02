@@ -4,6 +4,9 @@ pipeline {
     environment {
         GITHUB_REPO = "https://github.com/jhonuel/dev02.git"
         GIT_BRANCH = "dev02"
+        DOCKER_CREDENTIALS_ID = "docker-hub-credentials" // Reemplaza con el ID de tus credenciales en Jenkins
+        DOCKER_IMAGE = "jhonuel/payment-gateway-prod"
+        DOCKER_TAG = "latest"
     }
 
     stages {
@@ -19,7 +22,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compilando el proyecto...'
-                // Agrega aquí los comandos específicos para compilar tu proyecto
                 sh 'cd dev02 && mvn clean compile'
             }
         }
@@ -27,8 +29,19 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Ejecutando pruebas...'
-                // Agrega aquí los comandos específicos para ejecutar las pruebas de tu proyecto
                 sh 'cd dev02 && mvn test'
+            }
+        }
+
+        stage('Docker Build and Push') {
+            steps {
+                echo 'Construyendo la imagen Docker...'
+                script {
+                    docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
+                        sh 'cd dev02 && docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
+                        sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    }
+                }
             }
         }
 
@@ -38,7 +51,6 @@ pipeline {
                 // Detener y eliminar contenedores existentes
                 sh 'docker-compose down -v'
                 // Construir y levantar los nuevos contenedores
-              //  sh 'build .' 
                 sh 'docker-compose up -d --build'
             }
         }
