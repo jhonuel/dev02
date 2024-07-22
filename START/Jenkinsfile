@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo 'Clonando el repositorio...'
                 sh 'git --version' // Verificar si git está instalado
-                sh 'rm -rf dev || true' // Asegurar que no existe un directorio previo
+                sh 'rm -rf dev02 || true' // Asegurar que no existe un directorio previo
                 sh 'git clone ${GITHUB_REPO} -b ${GIT_BRANCH}'
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Compilando el proyecto...'
                 // Agrega aquí los comandos específicos para compilar tu proyecto
-                sh 'cd dev && mvn clean compile'
+                sh 'cd dev02 && mvn clean compile'
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Ejecutando pruebas...'
                 // Agrega aquí los comandos específicos para ejecutar las pruebas de tu proyecto
-                sh 'cd dev && mvn test'
+                sh 'cd dev02 && mvn test'
             }
         }
 
